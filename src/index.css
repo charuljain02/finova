@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   🌞 LIGHT MODE — CLEAN FINTECH UI
+   ========================================= */
+
+.light-grid-bg {
+  position: relative;
+  min-height: 100vh;
+  background-color: #f8fafc; /* soft neutral background */
+}
+
+/* ✨ Subtle premium glow (very light, not distracting) */
+.light-grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 15% 10%, rgba(59,130,246,0.06), transparent 50%),
+    radial-gradient(circle at 85% 0%, rgba(99,102,241,0.05), transparent 55%);
+
+  pointer-events: none;
+}
+
+/* 🔹 Optional subtle grid (clean & wide spacing) */
+.light-grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
+
+  background-size: 64px 64px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   🌙 DARK MODE — PREMIUM FINTECH GLOW
+   ========================================= */
+
+.dark .light-grid-bg {
+  position: relative;
+  min-height: 100vh;
+  background-color: #020617;
+}
+
+/* ✨ Controlled glow (not too strong) */
+.dark .light-grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59,130,246,0.15), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(99,102,241,0.12), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(236,72,153,0.08), transparent 55%);
+
+  filter: blur(60px);
+  pointer-events: none;
+
+  animation: glowMove 18s ease-in-out infinite alternate;
+}
+
+/* 🔹 Dark subtle grid */
+.dark .light-grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(to right, rgba(59,130,246,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59,130,246,0.05) 1px, transparent 1px);
+
+  background-size: 56px 56px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   ✨ ANIMATION
+   ========================================= */
+
+@keyframes glowMove {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+    transform: translate(-30px, 30px);
+  }
+}
