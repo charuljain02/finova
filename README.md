@@ -111,8 +111,11 @@ This project demonstrates:
 ---
 
 ## 🖼️ Screenshots
+<img width="1920" height="962" alt="Screenshot (285)" src="https://github.com/user-attachments/assets/3f24a460-1f50-4301-87e4-6a5a087f4d5e" />
+<img width="1920" height="960" alt="Screenshot (286)" src="https://github.com/user-attachments/assets/4d38973d-a6da-4576-ae74-4eb68737fe76" />
 
-> Add your dashboard screenshots here for better presentation
+<img width="1920" height="970" alt="Screenshot (287)" src="https://github.com/user-attachments/assets/444f6f23-9d6b-431b-bc09-45b7023655db" />
+
 
 ---
 
