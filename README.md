@@ -1,7 +1,6 @@
 # 💰 Finance Dashboard
 
-A modern, data-driven **Financial Analytics Dashboard** built with React and Tailwind CSS, designed to help users track, analyze, and optimize their financial activity in real-time.
-
+> **Precision Analytics for the Next Generation of Asset Management.**
 ---
 
 ## ✨ Overview
@@ -110,11 +109,15 @@ This project demonstrates:
 
 ---
 
-## 🖼️ Screenshots
-<img width="1920" height="962" alt="Screenshot (285)" src="https://github.com/user-attachments/assets/3f24a460-1f50-4301-87e4-6a5a087f4d5e" />
-<img width="1920" height="960" alt="Screenshot (286)" src="https://github.com/user-attachments/assets/4d38973d-a6da-4576-ae74-4eb68737fe76" />
+## Demo 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e22368e3-4dbf-4123-9be1-9b2af02ce41a" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/13237514-dc17-4f19-8a9c-66ef3f95763e" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ff0c893a-863f-46c7-9d3e-012174d0d239" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b0c15931-cdd4-4f2e-91ec-117f212b102a" />
 
-<img width="1920" height="970" alt="Screenshot (287)" src="https://github.com/user-attachments/assets/444f6f23-9d6b-431b-bc09-45b7023655db" />
+
+
+
 
 
 ---
@@ -122,32 +125,51 @@ This project demonstrates:
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
-```bash
-git clone https://github.com/charuljain02/finova.git
-
+```
+git clone [https://github.com/charuljain02/finova.git](https://github.com/charuljain02/finova.git)
 2. Install dependencies
+Bash
 npm install
 3. Run the project
+Bash
 npm run dev
+```
 🌐 Live Demo
+Experience the dashboard in action:
 
-Add your deployed link here (Vercel / Netlify)
+[🔗 finova-wheat.vercel.app](https://finova-wheat.vercel.app/)
 
-🤝 Contribution
+---
 
-Contributions are welcome! Feel free to fork this repository and improve the project.
+## 🤝 Contribution
 
-📌 Author
+Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Charul Jain
-B.Tech Student | FullStack Developer
-Passionate about building clean and scalable UI systems.
+1. **Fork** the Project
+2. Create your **Feature Branch**
+   ```
+   git checkout -b feature/AmazingFeature
+   ```
+Commit your Changes
 
-⭐ Acknowledgment
+```
+git commit -m 'Add some AmazingFeature'
+```
+Push to the Branch
 
-Inspired by modern fintech dashboards and real-world analytics platforms like Stripe and other SaaS products.
+```
+git push origin feature/AmazingFeature
+```
+Open a Pull Request
 
-📄 License
+---
+## 📌 Author
 
+Charul Jain B.Tech Student | Full-Stack Developer Passionate about building clean, scalable, and user-centric UI systems.
+
+## ⭐ Acknowledgment
+Inspired by the design language of modern fintech giants like Stripe, Linear, and Apple Card's analytics.
+
+## 📄 License
 This project is open-source and available under the MIT License.
 
