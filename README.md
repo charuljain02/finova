@@ -113,7 +113,7 @@ This project demonstrates:
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e22368e3-4dbf-4123-9be1-9b2af02ce41a" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/13237514-dc17-4f19-8a9c-66ef3f95763e" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ff0c893a-863f-46c7-9d3e-012174d0d239" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b0c15931-cdd4-4f2e-91ec-117f212b102a" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1bb415da-20df-4748-a337-da231fc6448e" />
 
 
 
