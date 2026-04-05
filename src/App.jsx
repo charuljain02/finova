@@ -20,11 +20,11 @@ function App() {
           
           {/* Dashboard (Main Content) */}
           {/* px-4/px-10 ensure karta hai ki cards screen ke edges se na chipkein */}
-          <main className="px-4 md:px-10 pb-10 flex-1 relative z-30 -mt-16 md:-mt-20 lg:-mt-24">
-            <div className="max-w-[1400px] mx-auto">
-              <Dashboard />
-            </div>
-          </main>
+          <main className="px-4 md:px-10 pb-10 flex-1 relative z-30 -mt-6 md:-mt-10 lg:-mt-12">
+  <div className="max-w-[1400px] mx-auto">
+    <Dashboard />
+  </div>
+</main>
 
           <Footer />
         </div>

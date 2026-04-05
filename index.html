@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark">
+    
     <title>Finova – Intelligence Portal</title>
 
     <link rel="icon" type="image/png" href="/finova.png" />
@@ -16,22 +18,25 @@
     />
 
     <style>
-      /* Prevent white flash on reload */
-      :root {
-        --bg-dark: #020617;
-      }
+      /* 🟢 FIX 3: Background color ab flexible hai */
       html {
         -webkit-font-smoothing: antialiased;
-        background-color: var(--bg-dark);
         scroll-behavior: smooth;
       }
+
+      /* 🟢 FIX 4: Default background ko neutral rakha taaki context load hone tak wait kare */
       body {
         margin: 0;
         font-family: 'Poppins', sans-serif;
-        color-scheme: dark; /* Helps with native UI elements */
+        background-color: #ffffff; /* Default light */
+      }
+
+      /* Dark mode overrides (for that initial reload flash) */
+      html.dark body {
+        background-color: #020617;
       }
       
-      /* 💎 Scrollbar logic for that "Zorvyn" feel */
+      /* 💎 Scrollbar logic */
       ::-webkit-scrollbar { width: 5px; height: 5px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { 
