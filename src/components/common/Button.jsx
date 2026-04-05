@@ -1,3 +1,6 @@
+// src/components/common/Button.jsx
+import React from "react";
+
 export function Button({
   children,
   variant = "primary",
@@ -5,29 +8,30 @@ export function Button({
   className = "",
   ...props
 }) {
-  // 🔹 Base styles: smooth transitions, focus, disabled states
+  // 🔹 Base styles: Added 'inline-flex' and 'items-center' for better icon alignment
+  // Added 'active:scale-95' globally for tactile feedback on touch
   const baseStyles =
-    "font-medium rounded-lg transition-transform transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 sm:active:scale-[0.98]";
 
-  // 🔹 Variants: color, hover, active, focus ring
+  // 🔹 Variants: Refined colors for better dark mode contrast
   const variantStyles = {
     primary:
-      "bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 focus:ring-indigo-500",
+      "bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-200 dark:shadow-none focus:ring-indigo-500",
     secondary:
-      "bg-gray-100 text-gray-900 hover:bg-gray-200 active:scale-95 focus:ring-gray-400",
+      "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-gray-400",
     danger:
-      "bg-rose-600 text-white hover:bg-rose-700 active:scale-95 focus:ring-rose-500",
+      "bg-rose-600 text-white hover:bg-rose-700 shadow-md shadow-rose-200 dark:shadow-none focus:ring-rose-500",
     success:
-      "bg-emerald-500 text-white hover:bg-emerald-600 active:scale-95 focus:ring-emerald-400",
+      "bg-emerald-500 text-white hover:bg-emerald-600 shadow-md shadow-emerald-200 dark:shadow-none focus:ring-emerald-400",
     warning:
-      "bg-amber-400 text-white hover:bg-amber-500 active:scale-95 focus:ring-amber-300",
+      "bg-amber-400 text-white hover:bg-amber-500 focus:ring-amber-300",
   };
 
-  // 🔹 Sizes: padding + font size
+  // 🔹 Sizes: Increased padding for mobile 'sm' and 'md' to ensure a 44px hit-target
   const sizeStyles = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-sm",
-    lg: "px-6 py-3 text-base",
+    sm: "px-3.5 py-2 text-xs md:text-sm", 
+    md: "px-5 py-2.5 text-sm",
+    lg: "px-8 py-4 text-base",
   };
 
   return (

@@ -7,11 +7,8 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 export function TransactionTable({ transactions = [], role = "viewer", filters }) {
   const { searchQuery, type, sortBy, sortOrder } = filters || {};
 
-  // --- PAGINATION STATE ---
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-
-  // --- REF FOR SCROLLING ---
+  const itemsPerPage = 8; // More items per page for a sleeker list
   const tableRef = useRef(null);
 
   // --- FILTER & SORT LOGIC ---
@@ -19,26 +16,20 @@ export function TransactionTable({ transactions = [], role = "viewer", filters }
     .filter((t) => {
       const query = searchQuery?.toLowerCase();
       return query
-        ? t.category.toLowerCase().includes(query) ||
-            (t.description || "").toLowerCase().includes(query)
+        ? t.category.toLowerCase().includes(query) || (t.description || "").toLowerCase().includes(query)
         : true;
     })
     .filter((t) => (type && type !== "all" ? t.type === type : true))
     .sort((a, b) => {
-      const result =
-        sortBy === "amount"
-          ? a.amount - b.amount
-          : new Date(a.date) - new Date(b.date);
+      const result = sortBy === "amount" ? a.amount - b.amount : new Date(a.date) - new Date(b.date);
       return sortOrder === "asc" ? result : -result;
     });
 
-  // --- PAGINATION CALCULATIONS ---
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredTransactions.slice(indexOfFirstItem, indexOfLastItem);
 
-  // --- PAGINATE FUNCTION ---
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -47,31 +38,27 @@ export function TransactionTable({ transactions = [], role = "viewer", filters }
   };
 
   return (
-    <Card className="p-4 md:p-6 shadow-xl rounded-2xl bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 transition-all">
-      
-      {/* --- TRANSACTION TABLE --- */}
-      <div ref={tableRef} className="overflow-x-auto rounded-lg">
-        <table className="min-w-full text-sm text-left border-collapse">
+    <Card className="p-0 shadow-2xl rounded-3xl bg-white dark:bg-[#0B0F1A] border border-slate-200 dark:border-white/5 overflow-hidden transition-all">
+      <div ref={tableRef} className="w-full overflow-x-auto no-scrollbar">
+        <table className="w-full text-left border-collapse min-w-[300px]">
           <thead>
-            <tr className="bg-gray-100 dark:bg-slate-800/50 text-gray-600 dark:text-gray-400 uppercase text-[11px] font-bold tracking-widest">
-              <th className="py-4 px-4">Date</th>
-              <th className="py-4 px-4">Description</th>
-              <th className="py-4 px-4">Category</th>
-              <th className="py-4 px-4">Type</th>
-              <th className="py-4 px-4 text-right">Amount</th>
-              {role === "admin" && <th className="py-4 px-4 text-center">Actions</th>}
+            <tr className="bg-slate-100/80 dark:bg-white/[0.02] text-slate-400 dark:text-slate-500 uppercase text-[10px] font-black tracking-[0.2em] border-b border-slate-200 dark:border-white/5">
+              <th className="py-5 px-4">Transaction</th>
+              <th className="py-5 px-4 hidden md:table-cell">Description</th>
+              <th className="py-5 px-4 hidden sm:table-cell">Category</th>
+              <th className="py-5 px-4 text-right">Amount</th>
+              {role === "admin" && <th className="py-5 px-4 text-center">Action</th>}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+          <tbody className="divide-y divide-slate-100 dark:divide-white/[0.05]">
             {currentItems.length > 0 ? (
-              currentItems.map((t) => <TransactionRow key={t.id} transaction={t} />)
+              currentItems.map((t) => (
+                <TransactionRow key={t.id} transaction={t} />
+              ))
             ) : (
               <tr>
-                <td
-                  colSpan={role === "admin" ? 6 : 5}
-                  className="text-center py-10 text-gray-400 dark:text-gray-500 italic"
-                >
-                  No matching transactions found
+                <td colSpan={5} className="text-center py-20 text-slate-400 dark:text-slate-600 font-medium text-sm">
+                  No matching records found.
                 </td>
               </tr>
             )}
@@ -79,70 +66,33 @@ export function TransactionTable({ transactions = [], role = "viewer", filters }
         </table>
       </div>
 
-      {/* --- PAGINATION CONTROLS --- */}
+      {/* --- COMPACT PAGINATION --- */}
       {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-2">
-          
-          {/* Showing results info */}
-          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-            Showing <span className="text-slate-900 dark:text-slate-200">{indexOfFirstItem + 1}</span> 
-            to <span className="text-slate-900 dark:text-slate-200">{Math.min(indexOfLastItem, filteredTransactions.length)}</span> 
-            of <span className="text-slate-900 dark:text-slate-200">{filteredTransactions.length}</span>
+        <div className="flex items-center justify-between p-5 bg-white dark:bg-transparent border-t border-slate-100 dark:border-white/5">
+          <p className="hidden sm:block text-[10px] font-black uppercase tracking-widest text-slate-400">
+            Page {currentPage} of {totalPages}
           </p>
-
-          {/* Pagination buttons */}
-          <div className="flex items-center gap-2">
-            
-            {/* Prev Arrow */}
+          
+          <div className="flex items-center gap-2 w-full sm:w-auto justify-between">
             <button
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
-              className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-blue-500 hover:text-blue-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-500 hover:text-indigo-500 disabled:opacity-20 transition-all"
             >
-              <FaAngleLeft size={18} />
+              <FaAngleLeft size={16} />
             </button>
 
-            {/* Page numbers */}
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/40 p-1 rounded-2xl border border-slate-200 dark:border-slate-700/50">
-              {[...Array(totalPages)].map((_, i) => {
-                const pageNum = i + 1;
+            {/* Simple Indicator for Mobile */}
+            <span className="sm:hidden text-xs font-bold text-slate-500">
+              {currentPage} / {totalPages}
+            </span>
 
-                // Ellipsis logic
-                if (
-                  totalPages > 5 &&
-                  pageNum !== 1 &&
-                  pageNum !== totalPages &&
-                  Math.abs(pageNum - currentPage) > 1
-                ) {
-                  if (Math.abs(pageNum - currentPage) === 2) {
-                    return <span key={pageNum} className="px-1 text-slate-400">...</span>;
-                  }
-                  return null;
-                }
-
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => paginate(pageNum)}
-                    className={`w-9 h-9 rounded-xl text-sm font-bold transition-all duration-300 ${
-                      currentPage === pageNum
-                        ? "bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] scale-105"
-                        : "text-slate-500 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-blue-500"
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Next Arrow */}
             <button
               onClick={() => paginate(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-blue-500 hover:text-blue-500 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:border-indigo-500 hover:text-indigo-500 disabled:opacity-20 transition-all"
             >
-              <FaAngleRight size={18} />
+              <FaAngleRight size={16} />
             </button>
           </div>
         </div>

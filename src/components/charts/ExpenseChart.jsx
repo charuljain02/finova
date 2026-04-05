@@ -1,34 +1,14 @@
-// src/components/charts/ExpenseChart.jsx
 import { useMemo, useState } from "react";
 import { useFinance } from "../../context/FinanceContext";
-import {
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  Sector,
-} from "recharts";
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend, Sector } from "recharts";
 
-const COLORS = [
-  "#ef4444",
-  "#f97316",
-  "#facc15",
-  "#22c55e",
-  "#3b82f6",
-  "#8b5cf6",
-  "#ec4899",
-  "#14b8a6",
-  "#6366f1",
-  "#84cc16",
-];
+const COLORS = ["#6366f1", "#f43f5e", "#10b981", "#f59e0b", "#3b82f6", "#8b5cf6"];
 
-export function ExpenseChart() {
-  const { transactions, theme } = useFinance();
+export function ExpenseChart({ transactions: propsTransactions }) {
+  const { transactions: contextTransactions, theme } = useFinance();
+  const transactions = propsTransactions || contextTransactions;
   const [activeIndex, setActiveIndex] = useState(null);
 
-  // ✅ Smart grouping + sorting
   const data = useMemo(() => {
     const grouped = transactions
       .filter((t) => t.type === "expense")
@@ -38,124 +18,69 @@ export function ExpenseChart() {
         acc[key].value += Number(t.amount);
         return acc;
       }, {});
-
-    let result = Object.values(grouped);
-
-    // 🔥 Sort descending
-    result.sort((a, b) => b.value - a.value);
-
-    // 🔥 Group small categories into "Others"
+    let result = Object.values(grouped).sort((a, b) => b.value - a.value);
     if (result.length > 6) {
       const top = result.slice(0, 5);
-      const others = result.slice(5);
-
-      const othersSum = others.reduce((sum, item) => sum + item.value, 0);
-
+      const othersSum = result.slice(5).reduce((sum, item) => sum + item.value, 0);
       result = [...top, { name: "Others", value: othersSum }];
     }
-
     return result;
   }, [transactions]);
 
   const totalExpenses = data.reduce((sum, d) => sum + d.value, 0);
 
-  // ✅ Empty state
-  if (data.length === 0) {
-    return (
-      <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg text-center text-gray-500 dark:text-gray-400">
-        No expense data available
-      </div>
-    );
-  }
-
-  // 🔥 Active slice (hover effect)
   const renderActiveShape = (props) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
-
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, name, value } = props;
     return (
       <g>
-        <Sector
-          cx={cx}
-          cy={cy}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius + 8} // 🔥 expand on hover
-          startAngle={startAngle}
-          endAngle={endAngle}
-          fill={fill}
-        />
+        <text x={cx} y={cy - 5} textAnchor="middle" className="fill-slate-400 text-[9px] font-black uppercase tracking-widest">{name}</text>
+        <text x={cx} y={cy + 15} textAnchor="middle" className="fill-slate-900 dark:fill-white text-lg font-black">₹{value.toLocaleString()}</text>
+        <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius + 8} startAngle={startAngle} endAngle={endAngle} fill={fill} cornerRadius={10} />
       </g>
     );
   };
 
-  return (
-    <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow-lg">
-      
-      {/* Header */}
-      <div className="flex flex-col items-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-          Expenses by Category
-        </h3>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          Total: ₹{totalExpenses.toLocaleString()}
-        </span>
-      </div>
+  if (data.length === 0) return <div className="h-full flex items-center justify-center text-xs text-slate-400">No Expenses</div>;
 
-      {/* Chart */}
-      <ResponsiveContainer width="100%" height={270}>
+  return (
+    <div className="w-full h-full relative">
+      {activeIndex === null && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-10%] sm:translate-y-[-12%]">
+          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Spent</span>
+          <span className="text-xl font-black text-slate-900 dark:text-white">₹{totalExpenses.toLocaleString()}</span>
+        </div>
+      )}
+      <ResponsiveContainer width="100%" height="100%" debounce={50}>
         <PieChart>
           <Pie
             data={data}
             dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={90}
-            paddingAngle={3}
-            cornerRadius={10}
+            cx="50%" cy="40%"
+            innerRadius="65%" outerRadius="85%"
+            paddingAngle={5} cornerRadius={12}
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             onMouseEnter={(_, index) => setActiveIndex(index)}
             onMouseLeave={() => setActiveIndex(null)}
-            isAnimationActive={true}
+            stroke="none"
           >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-                stroke={theme === "dark" ? "#111827" : "#fff"}
-                strokeWidth={2}
-              />
-            ))}
+            {data.map((_, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
           </Pie>
-
-          {/* Tooltip */}
-          <Tooltip
-            contentStyle={{
-              backgroundColor: theme === "dark" ? "#1f2937" : "#fff",
-              borderRadius: "10px",
-              border: "none",
-              boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-            }}
-            formatter={(value, name) => [
-              `₹${value.toLocaleString()}`,
-              name,
-            ]}
-          />
-
-          {/* Legend */}
-          <Legend
-            verticalAlign="bottom"
-            align="center"
-            iconType="circle"
-            wrapperStyle={{
-              fontSize: "12px",
-              marginTop: "10px",
-              color: theme === "dark" ? "#d1d5db" : "#374151",
+          <Tooltip 
+             content={({ active, payload }) => {
+              if (active && payload?.[0]) {
+                return (
+                  <div className="bg-white dark:bg-slate-800 p-2 px-3 shadow-xl rounded-lg border border-slate-100 dark:border-slate-700 text-[10px] font-bold uppercase text-indigo-500">
+                    {payload[0].name}: ₹{payload[0].value.toLocaleString()}
+                  </div>
+                );
+              }
+              return null;
             }}
           />
+          <Legend verticalAlign="bottom" iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: '800', textTransform: 'uppercase', paddingTop: '20px' }} />
         </PieChart>
       </ResponsiveContainer>
     </div>
   );
-} 
+}

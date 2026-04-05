@@ -1,57 +1,49 @@
 <!doctype html>
 <html lang="en" class="dark">
   <head>
-    <!-- 🔹 Meta -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finova – Intelligence Portal</title>
 
-    <!-- 🔹 Title -->
-    <title>Finance Dashboard</title>
-
-    <!-- 🔹 Favicon -->
-<link rel="icon" type="image/png" href="/favicon.png" />
-    <!-- 🔹 Google Fonts (Poppins - Optimized Weights) -->
+    <link rel="icon" type="image/png" href="/finova.png" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link 
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" 
       rel="stylesheet"
     />
 
-    <!-- 🔹 Smooth Font Rendering -->
     <style>
+      /* Prevent white flash on reload */
+      :root {
+        --bg-dark: #020617;
+      }
       html {
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        background-color: var(--bg-dark);
         scroll-behavior: smooth;
       }
-
       body {
         margin: 0;
         font-family: 'Poppins', sans-serif;
-        background-color: #f9fafb;
+        color-scheme: dark; /* Helps with native UI elements */
       }
-
-      /* 🔥 Optional: Nice Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
+      
+      /* 💎 Scrollbar logic for that "Zorvyn" feel */
+      ::-webkit-scrollbar { width: 5px; height: 5px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { 
+        background: #1e293b; 
+        border-radius: 10px; 
+        border: 1px solid rgba(255,255,255,0.05);
       }
-
-      ::-webkit-scrollbar-thumb {
-        background: #c7d2fe;
-        border-radius: 10px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: #6366f1;
-      }
+      ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
     </style>
   </head>
-
   <body>
     <div id="root"></div>
-
-    <!-- 🔹 App Entry -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
