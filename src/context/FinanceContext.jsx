@@ -1,15 +1,28 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
-// Mockdata ko 'mockData' ke naam se import kiya taaki conflict na ho
 import { transactions as mockData } from "../data/mockdata";
 
 const FinanceContext = createContext();
 
 export function FinanceProvider({ children }) {
-  // 🔹 Transactions State
+  // 🔹 DATA VERSIONING: Jab bhi aap mockdata.js badlo, is version ko "1.1" se "1.2" kar dena
+  const DATA_VERSION = "1.1"; 
+
+  // 🔹 Transactions State with Smart Reset
   const [transactions, setTransactions] = useState(() => {
     const stored = localStorage.getItem("transactions");
-    if (stored) return JSON.parse(stored);
-    return mockData; // Default to imported mock data
+    const storedVersion = localStorage.getItem("data_version");
+
+    // Agar version alag hai ya data pehli baar load ho raha hai, toh mockData use karein
+    if (!stored || storedVersion !== DATA_VERSION) {
+      localStorage.setItem("data_version", DATA_VERSION);
+      return mockData;
+    }
+
+    try {
+      return JSON.parse(stored);
+    } catch (error) {
+      return mockData;
+    }
   });
 
   const [role, setRole] = useState("admin");
@@ -48,6 +61,7 @@ export function FinanceProvider({ children }) {
     setTransactions(prev => prev.filter(t => t.id !== id));
   };
 
+  // 🔹 Summary Calculation
   const summary = useMemo(() => {
     const income = transactions
       .filter(t => t.type === "income")
