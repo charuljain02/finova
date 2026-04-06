@@ -125,8 +125,10 @@ This project demonstrates:
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
+
+git clone [https://github.com/charuljain02/finova.git][(https://github.com/charuljain02/finova)]
+
 ```
-git clone [https://github.com/charuljain02/finova.git](https://github.com/charuljain02/finova.git)
 2. Install dependencies
 Bash
 npm install
