@@ -126,7 +126,7 @@ This project demonstrates:
 
 ### 1. Clone the repository
 
-git clone [https://github.com/charuljain02/finova.git][(https://github.com/charuljain02/finova)]
+git clone [https://github.com/charuljain02/finova.git](https://github.com/charuljain02/finova)
 
 ```
 2. Install dependencies
